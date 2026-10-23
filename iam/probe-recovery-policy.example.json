@@ -1,0 +1,47 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "InspectAndDeleteRecordedProbeFunctions",
+      "Effect": "Allow",
+      "Action": ["lambda:GetFunctionConfiguration", "lambda:DeleteFunction"],
+      "Resource": "arn:aws:lambda:REGION:ACCOUNT_ID:function:aws-network-asserts-*"
+    },
+    {
+      "Sid": "InspectAndDeleteRecordedProbeRoles",
+      "Effect": "Allow",
+      "Action": [
+        "iam:GetRole",
+        "iam:GetRolePolicy",
+        "iam:ListRolePolicies",
+        "iam:ListAttachedRolePolicies",
+        "iam:ListInstanceProfilesForRole",
+        "iam:DeleteRolePolicy",
+        "iam:DeleteRole"
+      ],
+      "Resource": "arn:aws:iam::ACCOUNT_ID:role/aws-network-asserts-*"
+    },
+    {
+      "Sid": "DeleteOnlyProbeTaggedSecurityGroups",
+      "Effect": "Allow",
+      "Action": "ec2:DeleteSecurityGroup",
+      "Resource": "arn:aws:ec2:REGION:ACCOUNT_ID:security-group/*",
+      "Condition": {
+        "StringLike": {
+          "ec2:ResourceTag/aws-network-asserts:probe": "aws-network-asserts-*"
+        }
+      }
+    },
+    {
+      "Sid": "ReadRegionalDependencies",
+      "Effect": "Allow",
+      "Action": [
+        "ec2:DescribeSecurityGroups",
+        "ec2:DescribeNetworkInterfaces",
+        "ec2:DescribeRegions",
+        "lambda:ListFunctions"
+      ],
+      "Resource": "*"
+    }
+  ]
+}

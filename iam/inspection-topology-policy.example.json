@@ -1,0 +1,24 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "ReadInspectionTopology",
+      "Effect": "Allow",
+      "Action": [
+        "ec2:DescribeTransitGateways",
+        "ec2:DescribeTransitGatewayVpcAttachments",
+        "ec2:DescribeVpcs",
+        "ec2:DescribeSubnets",
+        "ec2:DescribeRouteTables",
+        "ec2:GetManagedPrefixListEntries"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "ReadSelectedFirewall",
+      "Effect": "Allow",
+      "Action": "network-firewall:DescribeFirewall",
+      "Resource": "arn:aws:network-firewall:REGION:ACCOUNT_ID:firewall/FIREWALL_NAME"
+    }
+  ]
+}
